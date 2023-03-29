@@ -1,6 +1,23 @@
+import { db } from "@/firebase";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import Post from "./Post";
 import Tweet from "./Tweet";
 
 function Feed() {
+  const [posts, setPosts] = useState<any>([]);
+
+
+  useEffect(
+    () =>
+      onSnapshot(
+        query(collection(db, "posts"), orderBy("timestamp", "desc")),
+        (snapshot) => {
+          setPosts(snapshot.docs);
+        }
+      ),
+    [db]
+  );
   return (
     <>
       <div className="max-w-2xl flex-grow border-l border-r border-gray-700 text-white sm:ml-[73px] xl:ml-[370px] ">
@@ -11,6 +28,11 @@ function Feed() {
           </div>
         </div>
         <Tweet />
+        <div className="pb-72">
+            {posts.map((post: any) => (
+                <Post key={post.id} id={post.id} post={post.data()} />
+            ))}
+        </div>
       </div>
     </>
   );
