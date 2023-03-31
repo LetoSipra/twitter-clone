@@ -21,6 +21,7 @@ import { modalState, postIdState } from "@/atoms/modalAtom";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { MdOutlineSwitchAccessShortcutAdd } from "react-icons/md";
+import Moment from "react-moment";
 
 function Post({ id, post, postPage }: any) {
   const { data: session }: any = useSession();
@@ -29,8 +30,17 @@ function Post({ id, post, postPage }: any) {
   const [comments, setComments] = useState([]);
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState([]);
-
   const router = useRouter();
+
+  const likePost = async () => {
+    if (liked) {
+      await deleteDoc(doc(db, "posts", id, "likes", session.user.uid));
+    } else {
+      await setDoc(doc(db, "posts", id, "likes", session.user.uid), {
+        username: session.user.name,
+      });
+    }
+  };
 
   useEffect(
     () =>
@@ -48,15 +58,6 @@ function Post({ id, post, postPage }: any) {
     [likes]
   );
 
-  const likePost = async () => {
-    if (liked) {
-      await deleteDoc(doc(db, "posts", id, "likes", session.user.uid));
-    } else {
-      await setDoc(doc(db, "posts", id, "likes", session.user.uid), {
-        username: session.user.name,
-      });
-    }
-  };
   useEffect(
     () =>
       onSnapshot(
@@ -71,7 +72,9 @@ function Post({ id, post, postPage }: any) {
 
   return (
     <>
-      <div className="flex cursor-pointer border-b border-gray-700 p-3">
+      <div
+        className="flex cursor-pointer border-b border-gray-700 p-3"
+        onClick={() => router.push(`/${id}`)}>
         {!postPage && (
           <img
             src={post?.userImg}
@@ -90,6 +93,7 @@ function Post({ id, post, postPage }: any) {
             )}
             <div className="text-[#6e767d]  ">
               <div className="group inline-block">
+                31
                 <h4
                   className={`font-bol text-[15px] text-[#d9d9d9] group-hover:underline sm:text-base ${
                     !postPage && "inline-block"
@@ -101,7 +105,10 @@ function Post({ id, post, postPage }: any) {
                   @{post?.tag}
                 </span>
               </div>{" "}
-              . <span className="text-sm hover:underline sm:text-[15px]"></span>
+              .{" "}
+              <span className="text-sm hover:underline sm:text-[15px]">
+                <Moment fromNow>{post?.timestamp?.toDate()}</Moment>
+              </span>
               {!postPage && (
                 <p className="mt-0.5 text-[15px] text-[#d9d9d9] sm:text-base">
                   {post?.text}

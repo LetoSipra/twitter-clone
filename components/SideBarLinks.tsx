@@ -1,20 +1,27 @@
+import Link from "next/link";
 import { IconType } from "react-icons";
 
 interface Props {
-    Icon: IconType,
-    text: string,
-    active?: boolean,
+  Icon: IconType;
+  text: string;
+  active?: boolean;
+  href: string;
 }
 
-function SideBarLinks({ Icon, text, active }: Props) {
+function SideBarLinks({ Icon, text, active, href }: Props) {
   return (
     <>
-    <div className={`text-[#d9d9d9] flex items-center justify-center xl:justify-start text-xl space-x-3 hoverAnimation ${active && "font-bold"}`}>
-        <Icon className="h-7 w-7" />
-        <span className="hidden xl:inline">{text}</span>
-    </div>
+      <Link href={href}>
+        <div
+          className={`hoverAnimation flex items-center justify-center space-x-3 text-xl text-[#d9d9d9] xl:justify-start ${
+            active && "font-bold"
+          }`}>
+          <Icon className="h-7 w-7" />
+          <span className="hidden xl:inline">{text}</span>
+        </div>
+      </Link>
     </>
-  )
+  );
 }
 
 export default SideBarLinks;

@@ -5,14 +5,19 @@ import { getProviders, getSession, useSession } from "next-auth/react";
 import Head from "next/head";
 import { Session } from "next-auth";
 import { Provider } from "next-auth/providers";
+import Modal from "@/components/Modal";
+import { useRecoilState } from "recoil";
+import { modalState, postIdState } from "@/atoms/modalAtom";
+import Widgets from "@/components/Widgets";
 
 interface Props {
-  session: Session
+  session: Session;
   providers: Provider | null;
 }
 
 export default function Home({ providers }: Props) {
   const { data: session } = useSession();
+  const [isOpen, setIsOpen] = useRecoilState(modalState);
 
   if (!session) return <Login providers={providers} />;
 
@@ -27,6 +32,8 @@ export default function Home({ providers }: Props) {
       <main className="mx-auto flex min-h-screen max-w-[1500px] bg-black">
         <SideBar />
         <Feed />
+        <Widgets />
+        {isOpen && <Modal />}
       </main>
     </>
   );
