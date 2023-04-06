@@ -25,7 +25,7 @@ function PostPage({ providers }: any) {
   const [post, setPost] = useState<any>();
   const [comments, setComments] = useState([]);
   const router = useRouter();
-  const { id } = router.query;
+  const { id }: any = router.query;
 
   useEffect(
     () =>
