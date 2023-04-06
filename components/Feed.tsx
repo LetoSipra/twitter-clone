@@ -7,7 +7,6 @@ import Tweet from "./Tweet";
 function Feed() {
   const [posts, setPosts] = useState<any>([]);
 
-
   useEffect(
     () =>
       onSnapshot(
@@ -24,14 +23,14 @@ function Feed() {
         <div className="sticky top-0 z-50 flex items-center border-b border-gray-700 bg-black px-3 py-2 text-[#d9d9d9] sm:justify-between ">
           <h2 className="text-lg font-bold sm:text-xl ">Home</h2>
           <div className="hoverAnimation ml-auto flex h-9 w-9 items-center justify-center xl:px-0 ">
-            31
+            #
           </div>
         </div>
         <Tweet />
         <div className="pb-72">
-            {posts.map((post: any) => (
-                <Post key={post.id} id={post.id} post={post.data()} />
-            ))}
+          {posts.map((post: any) => (
+            <Post key={post.id} id={post.id} post={post.data()} />
+          ))}
         </div>
       </div>
     </>

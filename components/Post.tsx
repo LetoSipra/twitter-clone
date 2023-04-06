@@ -78,7 +78,7 @@ function Post({ id, post, postPage }: any) {
         {!postPage && (
           <img
             src={post?.userImg}
-            alt="Profile Pic"
+            alt=""
             className="mr-4 h-11 w-11 rounded-full"
           />
         )}
