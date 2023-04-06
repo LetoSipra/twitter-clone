@@ -93,7 +93,6 @@ function Post({ id, post, postPage }: any) {
             )}
             <div className="text-[#6e767d]  ">
               <div className="group inline-block">
-                31
                 <h4
                   className={`font-bol text-[15px] text-[#d9d9d9] group-hover:underline sm:text-base ${
                     !postPage && "inline-block"
