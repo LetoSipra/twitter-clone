@@ -7,12 +7,12 @@ import { Session } from "next-auth";
 import { Provider } from "next-auth/providers";
 import Modal from "@/components/Modal";
 import { useRecoilState } from "recoil";
-import { modalState, postIdState } from "@/atoms/modalAtom";
+import { modalState } from "@/atoms/modalAtom";
 import Widgets from "@/components/Widgets";
 
 interface Props {
   session: Session;
-  providers: Provider | null;
+  providers: Provider;
 }
 
 export default function Home({ providers }: Props) {
